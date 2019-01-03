@@ -2,10 +2,14 @@ package clippings
 
 import (
 	"bufio"
+	"errors"
 	"log"
 	"os"
 	"strings"
 )
+
+var ErrFilePathEmpty = errors.New("Argument Error: filePath must be provided")
+var ErrScanFailed = errors.New("Runtime Error: entries scan failed")
 
 type EntryScanner interface {
 	Scan(filePath string) ([]string, error)
@@ -14,10 +18,14 @@ type EntryScanner interface {
 type DefaultEntryScanner struct {}
 
 func (s DefaultEntryScanner) Scan(filePath string) ([]string, error) {
+	if filePath == "" {
+		return nil, ErrFilePathEmpty
+	}
+
 	file, err := os.Open(filePath)
 	if err != nil {
 		log.Printf("Failed to open file at '%s'\n%#v", filePath, err)
-		return nil, err
+		return nil, ErrScanFailed
 	}
 	defer file.Close()
 
