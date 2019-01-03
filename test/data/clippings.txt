@@ -1,0 +1,10 @@
+Becoming Functional (Joshua Backfield)
+- Seu destaque ou posição 2046-2046 | Adicionado: quarta-feira, 14 de fevereiro de 2018 11:57:33
+
+Local variables do not change.
+==========
+Becoming Functional (Joshua Backfield)
+- Seu destaque ou posição 2046-2046 | Adicionado: quarta-feira, 14 de fevereiro de 2018 11:57:37
+
+Global variables can change only references.
+==========
