@@ -123,27 +123,29 @@ Michael Nygard’s book Release It
 		assert.Equals(t, entry, entries[0])
 	})
 
-	//t.Run("parse clippings fail due to non-existent file path", func(t *testing.T) {
-	//	entryScanner := &StubScanner{
-	//		ExpectedRawEntries:nil,
-	//		ExpectedErr:nil,
-	//	}
-	//
-	//	_, err := clippings.Parse(entryScanner, "")
-	//
-	//	assert.Equals(t, clippings.ErrFilePathEmpty, err)
-	//})
+	t.Run("parse clipping without author", func(t *testing.T) {
+		rawClippings := []string{
+			`A Cura de Schopenhauer (Irvin D. Yalom)
+- Seu marcador na página 13 | posição 188 | Adicionado: domingo, 7 de junho de 2015 18:21:16
 
-	//t.Run("parse clippings fail due to scan error", func(t *testing.T) {
-	//	entryScanner := &StubScanner{
-	//		ExpectedRawEntries:nil,
-	//		ExpectedErr: clippings.ErrScanFailed,
-	//	}
-	//
-	//	_, err := clippings.Parse(entryScanner, "/test/file")
-	//
-	//	assert.Equals(t, entryScanner.ExpectedErr, err)
-	//})
+
+==========`,
+		}
+
+		entries := clippings.Parse(rawClippings)
+
+		entry := clippings.Entry{
+			Document: "A Cura de Schopenhauer",
+			Author: "Irvin D. Yalom",
+			Kind: clippings.Bookmark,
+			Page: "13",
+			Position: "188",
+			Date: "domingo, 7 de junho de 2015 18:21:16",
+			Content: "",
+		}
+
+		assert.Equals(t, entry, entries[0])
+	})
 }
 
 

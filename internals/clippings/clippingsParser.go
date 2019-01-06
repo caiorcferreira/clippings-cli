@@ -42,7 +42,9 @@ func Parse(rawClippings []string) []Entry {
 	var entries []Entry
 
 	for _, rawEntry := range rawClippings {
-		entries = append(entries, parseEntry(rawEntry))
+		if strings.TrimSpace(rawEntry) != "" {
+			entries = append(entries, parseEntry(rawEntry))
+		}
 	}
 
 	return entries
@@ -79,7 +81,7 @@ func parseEntry(rawClipping string) Entry {
 }
 
 func findField(r *regexp.Regexp, target string) string {
-	submatch := r.FindStringSubmatch(target)
+	submatch := r.FindStringSubmatch(strings.TrimSpace(target))
 
 	if len(submatch) < 2 {
 		log.Printf("Could not find any match with regex %s in the given string %s", r, target)
