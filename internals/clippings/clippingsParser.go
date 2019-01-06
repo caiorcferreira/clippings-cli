@@ -1,12 +1,15 @@
 package clippings
 
 import (
+	"crypto/md5"
+	"encoding/hex"
 	"log"
 	"regexp"
 	"strings"
 )
 
 type Entry struct {
+	Id string `json:"id"`
 	Document string	`json:"document"`
 	Author string `json:"author"`
 	Kind Kind `json:"kind"`
@@ -69,7 +72,10 @@ func parseEntry(rawClipping string) Entry {
 	date := findField(dateRegex, rawClipping)
 	content := findField(contentRegex, rawClipping)
 
+	id := generateId(rawClipping)
+
 	return Entry{
+		Id: id,
 		Document: document,
 		Author: author,
 		Kind: NewKind(kind),
@@ -78,6 +84,13 @@ func parseEntry(rawClipping string) Entry {
 		Date: date,
 		Content: content,
 	}
+}
+
+func generateId(target string) string {
+	encoder := md5.New()
+	encoder.Write([]byte(target))
+
+	return hex.EncodeToString(encoder.Sum(nil))
 }
 
 func findField(r *regexp.Regexp, target string) string {

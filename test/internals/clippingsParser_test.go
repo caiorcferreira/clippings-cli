@@ -34,6 +34,7 @@ Global variables can change only references.
 
 		expectedEntries := []clippings.Entry{
 			{
+				Id: "6c49cc5682404f64fde91f9e06e4ad54",
 				Document: "Becoming Functional",
 				Author: "Joshua Backfield",
 				Kind: clippings.Highlight,
@@ -42,6 +43,7 @@ Global variables can change only references.
 				Content: "Local variables do not change.",
 			},
 			{
+				Id: "68efb25a0a45ace422a2d5b7dd60b150",
 				Document: "Becoming Functional",
 				Author: "Joshua Backfield",
 				Kind: clippings.Highlight,
@@ -66,6 +68,7 @@ Esta citação é de Hobbes
 		entries := clippings.Parse(rawClippings)
 
 		entry := clippings.Entry{
+			Id: "2e865ac9f6fca2f245c366918c8ab6d3",
 			Document: "A Cura de Schopenhauer",
 			Author:   "Irvin D. Yalom",
 			Kind:     clippings.Note,
@@ -89,6 +92,7 @@ REST In Practice
 		entries := clippings.Parse(rawClippings)
 
 		entry := clippings.Entry{
+			Id: "99dd7706b2644352778c613df155a717",
 			Document: "Building Microservices",
 			Author:   "Sam Newman",
 			Kind:     clippings.Highlight,
@@ -112,6 +116,7 @@ Michael Nygard’s book Release It
 		entries := clippings.Parse(rawClippings)
 
 		entry := clippings.Entry{
+			Id: "b9ec65e8c60375b9c5a511940aaafd4c",
 			Document: "Building Microservices - Sam Newman",
 			Author: "",
 			Kind: clippings.Highlight,
@@ -135,6 +140,7 @@ Michael Nygard’s book Release It
 		entries := clippings.Parse(rawClippings)
 
 		entry := clippings.Entry{
+			Id: "e0b3f36727107f0b57777404632709c6",
 			Document: "A Cura de Schopenhauer",
 			Author: "Irvin D. Yalom",
 			Kind: clippings.Bookmark,
