@@ -10,8 +10,8 @@ type Entry struct {
 	Document string	`json:"document"`
 	Author string `json:"author"`
 	Kind Kind `json:"kind"`
-	Position string `json:"position"`
-	Page string `json:"page"`
+	Position string `json:"position,omitempty"`
+	Page string `json:"page,omitempty"`
 	Date string `json:"date"`
 	Content string `json:"content"`
 }
