@@ -13,6 +13,7 @@ type Entry struct {
 	Author string `json:"author"`
 	Kind Kind `json:"kind"`
 	Position string `json:"position"`
+	Page string `json:"page"`
 	Date string `json:"date"`
 	Content string `json:"content"`
 }
@@ -52,8 +53,9 @@ func Parse(rawEntries []string) []Entry {
 var (
 	documentRegex = regexp.MustCompile(`(.+?)\(`)
 	authorRegex = regexp.MustCompile(`\(([^)]+)\)`)
-	kindRegex = regexp.MustCompile(`Seu (.+?) ou`)
+	kindRegex = regexp.MustCompile(`(?:Seu|Sua) (.+?) (?:ou|na)`)
 	positionRegex = regexp.MustCompile(`posição(.+?)\|`)
+	pageRegex = regexp.MustCompile(`página(.+?)\|`)
 	dateRegex = regexp.MustCompile(`Adicionado:(.+?)\n`)
 	contentRegex = regexp.MustCompile(`(.+?)\n==========$`)
 )
@@ -63,6 +65,7 @@ func parseEntry(rawEntry string) Entry {
 	author := findField(authorRegex, rawEntry)
 	kind := findField(kindRegex, rawEntry)
 	position := findField(positionRegex, rawEntry)
+	page := findField(pageRegex, rawEntry)
 	date := findField(dateRegex, rawEntry)
 	content := findField(contentRegex, rawEntry)
 
@@ -71,6 +74,7 @@ func parseEntry(rawEntry string) Entry {
 		Author: author,
 		Kind: NewKind(kind),
 		Position: position,
+		Page: page,
 		Date: date,
 		Content: content,
 	}

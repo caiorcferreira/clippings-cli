@@ -54,6 +54,52 @@ Global variables can change only references.
 		assert.Equals(t, expectedEntries, entries)
 	})
 
+	t.Run("parse clipping with note", func(t *testing.T) {
+		rawClippings := []string{
+			`A Cura de Schopenhauer (Irvin D. Yalom)
+- Sua nota ou posição 939 | Adicionado: segunda-feira, 8 de junho de 2015 17:34:04
+
+Esta citação é de Hobbes
+==========`,
+		}
+
+		entries := clippings.Parse(rawClippings)
+
+		entry := clippings.Entry{
+			Document: "A Cura de Schopenhauer",
+			Author:   "Irvin D. Yalom",
+			Kind:     clippings.Note,
+			Position: "939",
+			Date:     "segunda-feira, 8 de junho de 2015 17:34:04",
+			Content:  "Esta citação é de Hobbes",
+		}
+
+		assert.Equals(t, entry, entries[0])
+	})
+
+	t.Run("parse clipping with page count instead of position", func(t *testing.T) {
+		rawClippings := []string{
+			`Building Microservices (Sam Newman)
+- Seu destaque na página 227-227 | Adicionado: terça-feira, 4 de dezembro de 2018 19:45:12
+
+REST In Practice
+==========`,
+		}
+
+		entries := clippings.Parse(rawClippings)
+
+		entry := clippings.Entry{
+			Document: "Building Microservices",
+			Author:   "Sam Newman",
+			Kind:     clippings.Highlight,
+			Page: "227-227",
+			Date:     "terça-feira, 4 de dezembro de 2018 19:45:12",
+			Content:  "REST In Practice",
+		}
+
+		assert.Equals(t, entry, entries[0])
+	})
+
 	//t.Run("parse clippings fail due to non-existent file path", func(t *testing.T) {
 	//	entryScanner := &StubScanner{
 	//		ExpectedRawEntries:nil,
