@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main // import "github.com/caiorcferreira/kindle-clipping-cli-v2"
+package main // import "github.com/caiorcferreira/kindle-clipping-cli"
 
-import "github.com/caiorcferreira/kindle-clipping-cli-v2/cmd"
+import "github.com/caiorcferreira/kindle-clipping-cli/cmd"
 
 func main() {
 	cmd.Execute()

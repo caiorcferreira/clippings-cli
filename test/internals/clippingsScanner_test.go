@@ -1,8 +1,8 @@
 package clippings
 
 import (
-	"github.com/caiorcferreira/kindle-clipping-cli-v2/internals/clippings"
-	assert "github.com/caiorcferreira/kindle-clipping-cli-v2/test/util"
+	"github.com/caiorcferreira/kindle-clipping-cli/internals/clippings"
+	assert "github.com/caiorcferreira/kindle-clipping-cli/test/util"
 	"testing"
 )
 

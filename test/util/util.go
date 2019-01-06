@@ -3,8 +3,8 @@ package util
 import (
 	"fmt"
 	"path/filepath"
-	"runtime"
 	"reflect"
+	"runtime"
 	"testing"
 )
 

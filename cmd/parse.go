@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"github.com/caiorcferreira/kindle-clipping-cli-v2/internals/clippings"
+	"github.com/caiorcferreira/kindle-clipping-cli/internals/clippings"
 	"github.com/spf13/cobra"
 )
 

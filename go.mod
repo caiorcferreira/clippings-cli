@@ -1,4 +1,4 @@
-module github.com/caiorcferreira/kindle-clipping-cli-v2
+module github.com/caiorcferreira/kindle-clipping-cli
 
 require (
 	github.com/BurntSushi/toml v0.3.1 // indirect
