@@ -12,7 +12,7 @@ func TestScanClippings(t *testing.T) {
 
 		scanner := clippings.DefaultScanner{}
 
-		rawRntries, _ := scanner.Scan(filePath)
+		rawRntries, err := scanner.Scan(filePath)
 
 		expectedFirstEntry := 	`Becoming Functional (Joshua Backfield)
 - Seu destaque ou posição 2046-2046 | Adicionado: quarta-feira, 14 de fevereiro de 2018 11:57:33
@@ -20,6 +20,7 @@ func TestScanClippings(t *testing.T) {
 Local variables do not change.
 ==========`
 
+		assert.Ok(t, err)
 		assert.Equals(t, expectedFirstEntry, rawRntries[0])
 	})
 }
