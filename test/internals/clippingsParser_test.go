@@ -6,15 +6,6 @@ import (
 	"testing"
 )
 
-type StubScanner struct {
-	ExpectedRawEntries []string
-	ExpectedErr        error
-}
-
-func (s *StubScanner) Scan(filePath string) ([]string, error) {
-	return s.ExpectedRawEntries, s.ExpectedErr
-}
-
 func TestParseClippingsFile(t *testing.T) {
 	t.Run("parse clippings", func(t *testing.T) {
 		rawEntries := []string{
