@@ -6,8 +6,6 @@ import (
 	"strings"
 )
 
-
-
 type Entry struct {
 	Document string	`json:"document"`
 	Author string `json:"author"`
@@ -40,10 +38,10 @@ func NewKind(value string) Kind {
 	return rawKinds[value]
 }
 
-func Parse(rawEntries []string) []Entry {
+func Parse(rawClippings []string) []Entry {
 	var entries []Entry
 
-	for _, rawEntry := range rawEntries {
+	for _, rawEntry := range rawClippings {
 		entries = append(entries, parseEntry(rawEntry))
 	}
 
@@ -60,14 +58,14 @@ var (
 	contentRegex = regexp.MustCompile(`(.+?)\n==========$`)
 )
 
-func parseEntry(rawEntry string) Entry {
-	document := findField(documentRegex, rawEntry)
-	author := findField(authorRegex, rawEntry)
-	kind := findField(kindRegex, rawEntry)
-	position := findField(positionRegex, rawEntry)
-	page := findField(pageRegex, rawEntry)
-	date := findField(dateRegex, rawEntry)
-	content := findField(contentRegex, rawEntry)
+func parseEntry(rawClipping string) Entry {
+	document := findField(documentRegex, rawClipping)
+	author := findField(authorRegex, rawClipping)
+	kind := findField(kindRegex, rawClipping)
+	position := findField(positionRegex, rawClipping)
+	page := findField(pageRegex, rawClipping)
+	date := findField(dateRegex, rawClipping)
+	content := findField(contentRegex, rawClipping)
 
 	return Entry{
 		Document: document,

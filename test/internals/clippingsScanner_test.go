@@ -10,7 +10,7 @@ func TestScanClippings(t *testing.T) {
 	t.Run("scan clippings from file", func(t *testing.T) {
 		filePath := "/Users/caioferreira/sandbox/kindle-clippings-cli-v2/test/data/clippings.txt"
 
-		scanner := clippings.DefaultEntryScanner{}
+		scanner := clippings.DefaultScanner{}
 
 		rawRntries, _ := scanner.Scan(filePath)
 

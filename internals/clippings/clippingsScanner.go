@@ -11,13 +11,13 @@ import (
 var ErrFilePathEmpty = errors.New("Argument Error: filePath must be provided")
 var ErrScanFailed = errors.New("Runtime Error: entries scan failed")
 
-type EntryScanner interface {
+type Scanner interface {
 	Scan(filePath string) ([]string, error)
 }
 
-type DefaultEntryScanner struct {}
+type DefaultScanner struct {}
 
-func (s DefaultEntryScanner) Scan(filePath string) ([]string, error) {
+func (s DefaultScanner) Scan(filePath string) ([]string, error) {
 	if filePath == "" {
 		return nil, ErrFilePathEmpty
 	}
@@ -30,20 +30,20 @@ func (s DefaultEntryScanner) Scan(filePath string) ([]string, error) {
 	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
-	scanner.Split(splitEntries)
+	scanner.Split(splitClippings)
 
-	var rawEntries []string
+	var rawClippings []string
 
 	for scanner.Scan() {
-		rawEntries = append(rawEntries, scanner.Text())
+		rawClippings = append(rawClippings, scanner.Text())
 	}
 
-	return rawEntries, nil
+	return rawClippings, nil
 }
 
 const entrySeparator = "=========="
 
-func splitEntries(data []byte, atEOF bool) (advance int, token []byte, err error) {
+func splitClippings(data []byte, atEOF bool) (advance int, token []byte, err error) {
 
 	if atEOF && len(data) == 0 {
 		return 0, nil, nil

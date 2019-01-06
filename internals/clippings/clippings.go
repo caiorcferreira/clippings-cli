@@ -12,12 +12,12 @@ func (a App) ParseCommandRunner(flags []interface{}, args []string) {
 	clippingsFilePath := args[0]
 	outputFile := flags[0].(string)
 
-	scanner := DefaultEntryScanner{}
+	scanner := DefaultScanner{}
 
-	rawEntries, scannerErr := scanner.Scan(clippingsFilePath)
+	rawClippings, scannerErr := scanner.Scan(clippingsFilePath)
 	checkError(scannerErr)
 
-	entries := Parse(rawEntries)
+	entries := Parse(rawClippings)
 	response := map[string][]Entry{"entries": entries,}
 
 	jsonBytes, jsonErr := json.MarshalIndent(response, "", "\t")
