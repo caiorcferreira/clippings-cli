@@ -5,10 +5,10 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var outputFile string
+var parseOutputFile string
 
 func init() {
-	parseCmd.Flags().StringVarP(&outputFile, "output-file", "o", "", "file to write the parsing result")
+	parseCmd.Flags().StringVarP(&parseOutputFile, "output-file", "o", "", "file to write the parsing result")
 	rootCmd.AddCommand(parseCmd)
 }
 
@@ -17,7 +17,9 @@ var parseCmd = &cobra.Command{
 	Short: "Parse clippings to JSON schema",
 	Args: cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		app := clippings.App{}
-		app.ParseCommandRunner([]interface{}{outputFile}, args)
+		scanner := clippings.DefaultScanner{}
+		app := clippings.App{scanner}
+
+		app.ParseCommandRunner([]interface{}{parseOutputFile}, args)
 	},
 }

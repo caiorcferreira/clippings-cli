@@ -6,15 +6,15 @@ import (
 	"os"
 )
 
-type App struct {}
+type App struct {
+	scanner Scanner
+}
 
 func (a App) ParseCommandRunner(flags []interface{}, args []string) {
 	clippingsFilePath := args[0]
 	outputFile := flags[0].(string)
 
-	scanner := DefaultScanner{}
-
-	rawClippings, scannerErr := scanner.Scan(clippingsFilePath)
+	rawClippings, scannerErr := a.scanner.Scan(clippingsFilePath)
 	checkError(scannerErr)
 
 	entries := Parse(rawClippings)
@@ -38,9 +38,7 @@ func (a App) CreateDatabaseCommandRunner(flags []interface{}, args []string) {
 		outputFile = "./database.json"
 	}
 
-	scanner := DefaultScanner{}
-
-	rawClippings, scannerErr := scanner.Scan(clippingsFilePath)
+	rawClippings, scannerErr := a.scanner.Scan(clippingsFilePath)
 	checkError(scannerErr)
 
 	entries := Parse(rawClippings)

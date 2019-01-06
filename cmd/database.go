@@ -22,7 +22,9 @@ var databaseCmd = &cobra.Command{
 var databaseCreateCmd = &cobra.Command{
 	Use: "create",
 	Run: func(cmd *cobra.Command, args []string) {
-		app := clippings.App{}
+		scanner := clippings.DefaultScanner{}
+		app := clippings.App{scanner}
+
 		app.CreateDatabaseCommandRunner([]interface{}{databaseOutputFile}, args)
 	},
 }
