@@ -10,6 +10,13 @@ type App struct {
 	scanner Scanner
 }
 
+func NewApp() App {
+	scanner := DefaultScanner{}
+	app := App{scanner}
+
+	return app
+}
+
 func (a App) ParseCommandRunner(flags []interface{}, args []string) {
 	clippingsFilePath := args[0]
 	outputFile := flags[0].(string)

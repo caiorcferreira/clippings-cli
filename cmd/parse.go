@@ -17,8 +17,7 @@ var parseCmd = &cobra.Command{
 	Short: "Parse clippings to JSON schema",
 	Args: cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		scanner := clippings.DefaultScanner{}
-		app := clippings.App{scanner}
+		app := clippings.NewApp()
 
 		app.ParseCommandRunner([]interface{}{parseOutputFile}, args)
 	},
