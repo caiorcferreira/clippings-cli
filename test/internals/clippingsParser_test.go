@@ -100,6 +100,29 @@ REST In Practice
 		assert.Equals(t, entry, entries[0])
 	})
 
+	t.Run("parse clipping without author", func(t *testing.T) {
+		rawClippings := []string{
+			`Building Microservices - Sam Newman  
+- Seu destaque na página 212-212 | Adicionado: sábado, 1 de dezembro de 2018 23:48:59
+
+Michael Nygard’s book Release It
+==========`,
+		}
+
+		entries := clippings.Parse(rawClippings)
+
+		entry := clippings.Entry{
+			Document: "Building Microservices - Sam Newman",
+			Author: "",
+			Kind: clippings.Highlight,
+			Page: "212-212",
+			Date: "sábado, 1 de dezembro de 2018 23:48:59",
+			Content: "Michael Nygard’s book Release It",
+		}
+
+		assert.Equals(t, entry, entries[0])
+	})
+
 	//t.Run("parse clippings fail due to non-existent file path", func(t *testing.T) {
 	//	entryScanner := &StubScanner{
 	//		ExpectedRawEntries:nil,

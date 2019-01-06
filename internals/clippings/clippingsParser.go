@@ -51,7 +51,7 @@ func Parse(rawEntries []string) []Entry {
 }
 
 var (
-	documentRegex = regexp.MustCompile(`(.+?)\(`)
+	documentRegex = regexp.MustCompile(`^([^\-].+?)(?:\(|\n)`)
 	authorRegex = regexp.MustCompile(`\(([^)]+)\)`)
 	kindRegex = regexp.MustCompile(`(?:Seu|Sua) (.+?) (?:ou|na)`)
 	positionRegex = regexp.MustCompile(`posição(.+?)\|`)
