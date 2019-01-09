@@ -3,7 +3,6 @@ package clippings
 import (
 	"crypto/md5"
 	"encoding/hex"
-	"log"
 	"regexp"
 	"strings"
 )
@@ -97,7 +96,6 @@ func findField(r *regexp.Regexp, target string) string {
 	submatch := r.FindStringSubmatch(strings.TrimSpace(target))
 
 	if len(submatch) < 2 {
-		log.Printf("Could not find any match with regex %s in the given string %s", r, target)
 		return ""
 	}
 

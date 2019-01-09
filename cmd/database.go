@@ -13,6 +13,7 @@ func init() {
 	databaseQueryCmd.Flags().StringVarP(&queryDatabaseOutputFile, "output-file", "o", "", "file to write the database")
 
 	databaseCmd.AddCommand(databaseCreateCmd)
+	databaseCmd.AddCommand(databaseUpdateCmd)
 	databaseCmd.AddCommand(databaseQueryCmd)
 	rootCmd.AddCommand(databaseCmd)
 }
@@ -28,6 +29,15 @@ var databaseCreateCmd = &cobra.Command{
 		app := clippings.NewApp()
 
 		app.CreateDatabaseCommandRunner([]interface{}{createDatabaseOutputFile}, args)
+	},
+}
+
+var databaseUpdateCmd = &cobra.Command{
+	Use: "update",
+	Run: func(cmd *cobra.Command, args []string) {
+		app := clippings.NewApp()
+
+		app.UpdateDatabseCommandRunner([]interface{}{}, args)
 	},
 }
 
