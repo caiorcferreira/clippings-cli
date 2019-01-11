@@ -11,13 +11,26 @@ import (
 
 type App struct {
 	scanner Scanner
+	reader *DefaultFileReader
+	repository *EntriesRepository
 }
 
 func NewApp() App {
 	scanner := DefaultScanner{}
-	app := App{scanner}
+	reader := &DefaultFileReader{}
+	repository := &EntriesRepository{Reader:reader}
+
+	app := App{scanner, reader, repository}
 
 	return app
+}
+
+type DefaultFileReader struct {
+	FilePath string
+}
+
+func (f *DefaultFileReader) ReadFile() ([]byte, error) {
+	return ioutil.ReadFile(f.FilePath)
 }
 
 func (a App) ParseCommandRunner(flags []interface{}, args []string) {
@@ -69,14 +82,9 @@ func (a App) UpdateDatabseCommandRunner(flags []interface{}, args []string) {
 	databasePath := args[0]
 	clippingsFilePath := args[1]
 
-	databaseJson, databaseErr := ioutil.ReadFile(databasePath)
-	checkError(databaseErr)
-
-	queryResult := gjson.Get(string(databaseJson), "entries")
-
-	entries := getEntriesFromQuery(queryResult)
-	entriesIds := getEntriesIds(entries)
-	existingEntriesSet := makeSet(entriesIds)
+	a.reader.FilePath = databasePath
+	existingEntries := a.repository.GetAll()
+	existingIdsSet := makeSet(getEntriesIds(existingEntries))
 
 	rawClippings, scannerErr := a.scanner.Scan(clippingsFilePath)
 	checkError(scannerErr)
@@ -84,12 +92,12 @@ func (a App) UpdateDatabseCommandRunner(flags []interface{}, args []string) {
 	availableEntries := Parse(rawClippings)
 
 	for _, availableEntry := range availableEntries {
-		if !existingEntriesSet[availableEntry.Id] {
-			entries = append(entries, availableEntry)
+		if !existingIdsSet[availableEntry.Id] {
+			existingEntries = append(existingEntries, availableEntry)
 		}
 	}
 
-	response := map[string][]Entry{"entries": entries,}
+	response := map[string][]Entry{"existingEntries": existingEntries,}
 
 	jsonBytes, jsonErr := json.MarshalIndent(response, "", "\t")
 	checkError(jsonErr)
@@ -121,9 +129,9 @@ func getEntriesFromQuery(result gjson.Result) []Entry {
 			Id:       entryMap["id"].(string),
 			Document: entryMap["document"].(string),
 			Author:   entryMap["author"].(string),
-			Kind:     NewKind(entryMap["kind"].(string)),
 			Date:     entryMap["date"].(string),
 			Content:  entryMap["content"].(string),
+			Kind:     NewKind(entryMap["kind"].(string)),
 			Page:     fmt.Sprintf("%v", entryMap["page"]),
 			Position: fmt.Sprintf("%v", entryMap["position"]),
 		})
@@ -147,16 +155,8 @@ func (a App) QueryDatabaseCommandRunner(flags []interface{}, args []string) {
 	databasePath := args[1]
 	outputFile := flags[0].(string)
 
-	databaseJson, databaseErr := ioutil.ReadFile(databasePath)
-	checkError(databaseErr)
-
-	queryResult := gjson.Get(string(databaseJson), query)
-
-	var entries []interface{}
-	queryResult.ForEach(func(key, value gjson.Result) bool {
-		entries = append(entries, value.Value())
-		return true
-	})
+	a.reader.FilePath = databasePath
+	entries := a.repository.GetByQuery(query)
 
 	//TODO: change response format to use "result"
 	response := map[string][]interface{}{"entries": entries,}

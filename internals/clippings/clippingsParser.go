@@ -31,13 +31,25 @@ func (k Kind) String() string {
 }
 
 func NewKind(value string) Kind {
-	rawKinds := map[string]Kind{
+	kindsFromClippings := map[string]Kind{
 		"destaque": Highlight,
 		"nota": Note,
 		"marcador": Bookmark,
 	}
 
-	return rawKinds[value]
+	rawKinds := map[string]Kind{
+		"highlight": Highlight,
+		"note": Note,
+		"bookmark": Bookmark,
+	}
+
+	kind, ok := kindsFromClippings[value]
+
+	if ok {
+		return kind
+	} else {
+		return rawKinds[value]
+	}
 }
 
 func Parse(rawClippings []string) []Entry {
