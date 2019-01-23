@@ -158,8 +158,7 @@ func (a App) QueryDatabaseCommandRunner(flags []interface{}, args []string) {
 	a.reader.FilePath = databasePath
 	entries := a.repository.GetByQuery(query)
 
-	//TODO: change response format to use "result"
-	response := map[string][]interface{}{"entries": entries,}
+	response := map[string][]interface{}{"result": entries,}
 
 	jsonBytes, jsonErr := json.MarshalIndent(response, "", "\t")
 	checkError(jsonErr)
